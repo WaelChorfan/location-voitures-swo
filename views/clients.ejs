@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1><%=msg%></h1>
+
+    <div class="container ">
+        <div class="row offset-1">
+
+            <div class="col-md-4 col-offset-2 m-1">
+                <!-- block1 -->
+                <form action="/clients/" method="post">
+                    <input type="text" placeholder="id" name="id" hidden> <br> <br>
+                    <input type="text" placeholder="nom" name="nom"> <br> <br>
+                    <input type="text" placeholder="prenom" name="prenom"> <br> <br>
+                    <input type="text" placeholder="Telephone" name="tel"> <br> <br>
+                    <input type="text" placeholder="solde" name="solde"> <br> <br>
+                    <br>
+                    <input type="submit" value="Enregistrer">
+                    <input type="reset" value="Annuler">
+
+                </form>
+            </div>
+
+            <div class="col-md-4 col-offset-2 m-1 ">
+                <!-- block2 -->
+                <form action="/clients/search" method="POST">
+                    <input type="text" placeholder="search here"  name="searchText">
+                    <input type="submit" value="Search .."  >
+                </form>
+                
+                <table class="table table-striped">
+                    <tr>
+                        <th>nom </th>
+                        <th>prenom</th>
+                        <th>Telephone</th>
+                        <th>solde</th>
+                        <th>delete</th>
+                        <th>edit</th>
+                    </tr>
+                    <% for(var i=0; i   < long ; i++)  {%>
+                    <tr>
+                        <td>
+                            <%= JSON.stringify(client[i].nom).replace(/"/g,'') %>
+                        </td>
+                        <td>
+                            <%= JSON.stringify(client[i].prenom).replace(/"/g,'')%>
+                        </td>
+                        <td>
+                            <%= JSON.stringify(client[i].tel).replace(/"/g,'')%>
+                        </td>
+                        <td>
+                            <%= JSON.stringify(client[i].solde).replace(/"/g,'')%>
+                        </td>
+                        <td>
+                            <form action="/clients/delete" method="post">
+                                <input type="text" name="id"
+                                    value="<%= JSON.stringify(client[i].id).replace(/"/g,'') %>" hidden>
+                                </input>
+                                <input type="submit" value="Delete" />
+                            </form>
+
+                        </td>
+                        <td>
+                            <button onclick="
+                                
+                                window.id='<%= client[i].id %>' ;
+                                window.nom='<%= client[i].nom %>' ;
+                                window.prenom='<%= client[i].prenom %>' ;
+                                window.tel='<%= client[i].tel %>' ;
+                                window.solde='<%= client[i].solde %>' ;
+                                setEditionMode()">Edit</button>
+                        </td>
+
+                    </tr>
+                    <% } %>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        function setEditionMode() {
+            document.getElementsByName("id")[0].value = window.id
+            document.getElementsByName("nom")[0].value = window.nom
+            document.getElementsByName("prenom")[0].value = window.prenom
+            document.getElementsByName("tel")[0].value = window.tel
+            document.getElementsByName("solde")[0].value = window.solde
+        }
+    </script>
+</body>
+
+
+
+</html>
