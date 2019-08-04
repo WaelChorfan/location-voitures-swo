@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- bootstrap   -->
+    <title>Locations</title>
+</head>
+
+<body>
+    <% include includes/navbar %>
+
+
+
+    <div class="container ">
+        <div class="row offset-1">
+
+            <div class="col-4  mt-4">
+
+                <div class="card">
+                    <div class="card-header"> Ajouter une nouvelle location</div>
+                    <div class="card-body">
+                        <form action="/locations" method="post">
+                            <br>
+                            <br>
+                            <input type="text" name="id" hidden>
+                  
+
+                            <div class="form-group mb-2">
+                                <label for="idVoiture">Voiture</label>
+                                <select id="idVoiture" name="idVoiture">
+
+                                    <%
+                                        for ( var i = 0; i < voits.length; i++ )
+                                        {
+                                            %><option value="<%=voits[ i ].id %>"><%= voits[i].matricule %></option><%
+                                        }
+                                        %>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group mb-2">
+                                <label for="idClient">Client</label>
+                                <select id="idClient" name="idClient">
+
+                                    <%
+                                            for ( var i = 0; i < clts.length; i++ )
+                                            {
+                                                %><option value="<%=clts[ i ].id %>">
+                                        <%= clts[i].cin +  " - "+ clts[i].nomClient %></option><%
+                                            }
+                                            %>
+                                </select>
+                            </div>
+
+                            <!-- input date debut -->
+                            <div class="form-group mt-2">
+                                <label for="datedeb">Date début</label>
+                                <input type="date" placeholder="datedeb" id="datedeb" name="datedeb">
+                            </div>
+
+
+                            <!-- input date fin -->
+                            <div class="form-group">
+                                <label for="datefin">Date fin</label>
+                                <input type="date" placeholder="datefin" id="datefin" name="datefin">
+                            </div>
+
+                            <!-- input caution -->
+                            <div class="form-group">
+                                <label for="caution">caution</label>
+                                <input type="number" placeholder="caution" id="caution" name="caution">
+                            </div>
+
+                            <!-- input prixtotal -->
+                            <div class="form-group">
+                                <label for="prixtotal">prixtotal</label>
+                                <input type="number" placeholder="Prix total" id="prixtotal" name="prixtotal">
+                            </div>
+
+
+                            <input type="submit" value="Enregistrer" class="btn btn-primary">
+                            <input type="reset" value="Annuler" class="btn btn-danger">
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+            <div class="col-6   mt-4">
+                <!-- block2 -->
+                <form action="/locations/search" method="POST">
+
+                    <div class="input-group">
+
+                        <div class="d-inline-block">
+                            <input type="text" class="form-control mb-2 mr-2" placeholder="search here"
+                                name="searchText">
+                        </div>
+                        <div class="d-inline-block">
+                            <input type="submit" value="Search .." class="btn btn-info" class="form-control mb-2">
+                        </div>
+                    </div>
+
+
+                </form>
+
+                <table class="table table-striped mt-4">
+                    <tr>
+                        <th>Date début</th>
+                        <th>Date fin</th>
+                        <th>Caution </th>
+                        <th>Prix total</th>
+                        <th>Matricule</th>
+                        <th>Nom Client</th>
+                        <th>CIN Client</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    <% for(var i=0; i   < long ; i++)  {%>
+                    <tr>
+                        <td>
+                            <%= JSON.stringify(location[i].datedeb).replace(/"/g,'') %>
+                        </td>
+                        <td>
+                            <%= JSON.stringify(location[i].datefin).replace(/"/g,'')%>
+                        </td>
+
+
+                        <td>
+                            <%= JSON.stringify(location[i].caution).replace(/"/g,'')%>
+                        </td>
+
+
+                        <td>
+                            <%= JSON.stringify(location[i].prixtotal).replace(/"/g,'')%>
+                        </td>
+                        <td>
+                            <%= JSON.stringify(location[i].matricule).replace(/"/g,'')%>
+                        </td>
+                        <td>
+                            <%= JSON.stringify(location[i].nomClient).replace(/"/g,'')%>
+                        </td>
+
+                        <td>
+                            <%= JSON.stringify(location[i].cin).replace(/"/g,'')%>
+                        </td>
+
+
+                        <td>
+                            <form action="/locations/delete" method="post">
+                                <input type="text" name="id"
+                                    value="<%= JSON.stringify(location[i].id).replace(/"/g,'') %>" hidden>
+                                </input>
+                                <input type="submit" value="Delete" class="btn btn-danger" />
+                            </form>
+                        </td>
+                        <td>
+                            <button onclick="
+                                
+                                window.id='<%= location[i].id%>' ;
+                                window.idVoiture='<%= location[i].idVoiture%>' ;
+                                window.idClient='<%= location[i].idClient%>' ;
+                                window.datedeb='<%= location[i].datedeb %>' ;
+                                window.datefin='<%= location[i].datefin %>' ;
+                                window.caution='<%= location[i].caution %>' ;
+                                window.prixtotal='<%= location[i].prixtotal%>' ;
+                                window.matricule='<%= location[i].matricule%>' ;
+
+
+                                setEditionMode()" class="btn btn-secondary">Edit</button>
+                        </td>
+                    </tr>
+                    <% } %>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        function setEditionMode() {
+            document.getElementsByName("id")[0].value = window.id
+            document.getElementsByName("datedeb")[0].value = window.datedeb
+            document.getElementsByName("datefin")[0].value = window.datefin
+            document.getElementsByName("caution")[0].value = window.caution
+            document.getElementsByName("prixtotal")[0].value = window.prixtotal
+            document.getElementById("idVoiture").value=window.idVoiture
+            document.getElementById("idClient").value=window.idClient 
+        
+
+        }
+    </script>
+</body>
+
+</html>

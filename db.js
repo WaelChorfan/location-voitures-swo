@@ -29,7 +29,7 @@ var database = new Database(
         host: "localhost",
         user: "root",
         password: "0000",
-        database: "stagebdd",
+        database: "stagebdd_r",
         port: 3306
     })
 

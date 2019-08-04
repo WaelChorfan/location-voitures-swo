@@ -5,31 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!-- bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<!-- bootstrap   -->
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Document</title>
-
 </head>
 
 <body>
-        <% include includes/navbar %>
+     <% include includes/navbar %>
     <h1><%=msg%></h1>
-
-    <div class="container ">
+    <div class="container">
         <div class="row offset-1">
-
             <div class="col-md-4 col-offset-2 m-1">
+                
                 <!-- block1 -->
                 <form action="/voitures/" method="post">
                     <input type="text" placeholder="matricule" name="matricule"> <br> <br>
                     <input type="text" placeholder="marque" name="marque"> <br> <br>
                     <input type="text" placeholder="couleur" name="couleur"> <br> <br> 
-                     <input type="text" placeholder="prixJour" name="prixJour"> <br> <br>
-                
+                     <input type="text" placeholder="prixNjour" name="prixNjour"> <br> <br>
+                     <input type="text" placeholder="prixEjour" name="prixEjour"> <br> <br>
                     <br>
                     <input type="submit" value="Enregistrer">
                     <input type="reset" value="Annuler">
@@ -49,8 +44,8 @@
                         <th>matricule</th>
                         <th>marque</th>
                         <th>couleur</th>
-                        <th>Prix par jour</th>
-                      
+                        <th>prixNjour</th>
+                        <th>prixEjour</th>
                         <th>delete</th>            
                         <th>edit</th>
                     </tr>
@@ -66,7 +61,10 @@
                             <%= JSON.stringify(voiture[i].couleur).replace(/"/g,'')%>
                         </td>
                         <td>
-                            <%= JSON.stringify(voiture[i].prixJour).replace(/"/g,'')%>
+                            <%= JSON.stringify(voiture[i].prixNjour).replace(/"/g,'')%>
+                        </td>
+                        <td>
+                            <%= JSON.stringify(voiture[i].prixEjour).replace(/"/g,'')%>
                         </td>
                         <td>
                             <form action="/voitures/delete" method="post">
@@ -83,8 +81,8 @@
                                 window.matricule='<%= voiture[i].matricule %>' ;
                                 window.marque='<%= voiture[i].marque %>' ;
                                 window.couleur='<%= voiture[i].couleur %>' ;
-                                window.prixJour='<%= voiture[i].prixJour%>' ;
-                          
+                                window.prixNjour='<%= voiture[i].prixNjour%>' ;
+                                window.prixEjour='<%= voiture[i].prixEjour %>' ;
                                 setEditionMode()">Edit</button>
                         </td>
                     </tr>
@@ -99,7 +97,8 @@
             document.getElementsByName("matricule")[0].value = window.matricule
             document.getElementsByName("marque")[0].value = window.marque
             document.getElementsByName("couleur")[0].value = window.couleur
-            document.getElementsByName("prixJour")[0].value = window.prixJour
+            document.getElementsByName("prixNjour")[0].value = window.prixNjour
+            document.getElementsByName("prixEjour")[0].value = window.prixEjour
         }
     </script>
 </body>
