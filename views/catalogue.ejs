@@ -9,97 +9,46 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Document</title>
+
 </head>
 
 <body>
-     <% include includes/navbar %>
-    <h1><%=msg%></h1>
-    <div class="container">
-        <div class="row offset-1">
-            <div class="col-md-4 col-offset-2 m-1">
-                
-                <!-- block1 -->
-                <form action="/voitures/" method="post">
-                    <input type="text" placeholder="matricule" name="matricule"> <br> <br>
-                    <input type="text" placeholder="marque" name="marque"> <br> <br>
-                    <input type="text" placeholder="couleur" name="couleur"> <br> <br> 
-                     <input type="text" placeholder="prixNjour" name="prixNjour"> <br> <br>
-                     <input type="text" placeholder="prixEjour" name="prixEjour"> <br> <br>
-                    <br>
-                    <input type="submit" value="Enregistrer">
-                    <input type="reset" value="Annuler">
+    
+        <% include includes/navbar %>
+        
+        <div class="container">
+        <h1>Catalogue des voitures</h1>
+        <hr>
+            <div class="row">
+        <% for(var i=0; i < long ; i++)  {%>
+        
+            <div class="card col-xs-6 col-md-3 col-offset-2 m-4">
+                <img ondblclick="showImage(this);"
+                    src="http://localhost:3000/images/<%= JSON.stringify(voiture[i].image).replace(/"/g,'')  %>">
 
-                </form>
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text"> <%= JSON.stringify(voiture[i].matricule).replace(/"/g,'') %></p>
+                </div>
             </div>
 
-            <div class="col-md-4 col-offset-2 m-1 ">
-                <!-- block2 -->
-                <form action="/voitures/search" method="post">
-                    <input type="text" placeholder="search here"  name="searchText">
-                    <input type="submit" value="Search .."  >
-                </form>
-                
-                <table class="table table-striped">
-                    <tr>
-                        <th>matricule</th>
-                        <th>marque</th>
-                        <th>couleur</th>
-                        <th>prixNjour</th>
-                        <th>prixEjour</th>
-                        <th>delete</th>            
-                        <th>edit</th>
-                    </tr>
-                    <% for(var i=0; i   < long ; i++)  {%>
-                    <tr>
-                        <td>
-                            <%= JSON.stringify(voiture[i].matricule).replace(/"/g,'') %>
-                        </td>
-                        <td>
-                            <%= JSON.stringify(voiture[i].marque).replace(/"/g,'')%>
-                        </td>
-                        <td>
-                            <%= JSON.stringify(voiture[i].couleur).replace(/"/g,'')%>
-                        </td>
-                        <td>
-                            <%= JSON.stringify(voiture[i].prixNjour).replace(/"/g,'')%>
-                        </td>
-                        <td>
-                            <%= JSON.stringify(voiture[i].prixEjour).replace(/"/g,'')%>
-                        </td>
-                        <td>
-                            <form action="/voitures/delete" method="post">
-                                <input type="text" name="id"
-                                    value="<%= JSON.stringify(voiture[i].id).replace(/"/g,'') %>" hidden>
-                                </input>
-                                <input type="submit" value="Delete" />
-                            </form>
-                        </td>
-                        <td>
-                            <button onclick="
-                                
-                                window.id='<%= voiture[i].id %>' ;
-                                window.matricule='<%= voiture[i].matricule %>' ;
-                                window.marque='<%= voiture[i].marque %>' ;
-                                window.couleur='<%= voiture[i].couleur %>' ;
-                                window.prixNjour='<%= voiture[i].prixNjour%>' ;
-                                window.prixEjour='<%= voiture[i].prixEjour %>' ;
-                                setEditionMode()">Edit</button>
-                        </td>
-                    </tr>
-                    <% } %>
-                </table>
-            </div>
+
+            <% } %>
         </div>
     </div>
+
     <script>
-        function setEditionMode() {
-            document.getElementsByName("id")[0].value = window.id
-            document.getElementsByName("matricule")[0].value = window.matricule
-            document.getElementsByName("marque")[0].value = window.marque
-            document.getElementsByName("couleur")[0].value = window.couleur
-            document.getElementsByName("prixNjour")[0].value = window.prixNjour
-            document.getElementsByName("prixEjour")[0].value = window.prixEjour
+        function showImage(obj) {
+            var imWin = window.open(obj.src);
+
+            setTimeout(() => {
+                imWin.close();
+            }, 3000);
+
         }
+
     </script>
+
 </body>
+
 </html>

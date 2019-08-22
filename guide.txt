@@ -1,0 +1,3 @@
+ajouter index pour les images pour différencier les voitures
+ALTER  TABLE voiture
+ADD UNIQUE INDEX idx_images (image);

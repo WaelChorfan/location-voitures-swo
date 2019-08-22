@@ -12,19 +12,25 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <!-- bootstrap   -->
     <title>Document</title>
+
 </head>
 
 <body>
         <% include includes/navbar %>
-    <h1><%=msg%></h1>
+ 
 
     <div class="container ">
+            <h1><%=msg%></h1>
+            <hr>
         <div class="row offset-1">
 
-            <div class="col-md-4 col-offset-2 m-1">
+            <div class="col-md-4 col-offset-2 mt-1">
+                
+            <h2>Ajouter Client</h2>
                 <!-- block1 -->
                 <form action="/clients/" method="post">
                     <input type="text" placeholder="id" name="id" hidden> <br> <br>
+                    <input type="text" placeholder="cin" name="cin" > <br> <br>
                     <input type="text" placeholder="nom" name="nom"> <br> <br>
                     <input type="text" placeholder="prenom" name="prenom"> <br> <br>
                     <input type="text" placeholder="Telephone" name="tel"> <br> <br>
@@ -36,15 +42,16 @@
                 </form>
             </div>
 
-            <div class="col-md-4 col-offset-2 m-1 ">
+            <div class="col-md-4 col-offset-2 mt-1 ">
                 <!-- block2 -->
                 <form action="/clients/search" method="POST">
                     <input type="text" placeholder="search here"  name="searchText">
                     <input type="submit" value="Search .."  >
                 </form>
-                
+                <hr>
                 <table class="table table-striped">
                     <tr>
+                        <th>cin</th>
                         <th>nom </th>
                         <th>prenom</th>
                         <th>Telephone</th>
@@ -54,6 +61,9 @@
                     </tr>
                     <% for(var i=0; i   < long ; i++)  {%>
                     <tr>
+                            <td>
+                                    <%= JSON.stringify(client[i].cin).replace(/"/g,'') %>
+                                </td>
                         <td>
                             <%= JSON.stringify(client[i].nom).replace(/"/g,'') %>
                         </td>
@@ -77,12 +87,13 @@
                         </td>
                         <td>
                             <button onclick="
-                                
                                 window.id='<%= client[i].id %>' ;
+                                window.cin='<%= client[i].cin %>' ;
                                 window.nom='<%= client[i].nom %>' ;
                                 window.prenom='<%= client[i].prenom %>' ;
                                 window.tel='<%= client[i].tel %>' ;
                                 window.solde='<%= client[i].solde %>' ;
+                                document.getElementsByName('cin')[0].disabled = true;
                                 setEditionMode()">Edit</button>
                         </td>
 
@@ -102,6 +113,7 @@
     <script>
         function setEditionMode() {
             document.getElementsByName("id")[0].value = window.id
+            document.getElementsByName("cin")[0].value = window.cin
             document.getElementsByName("nom")[0].value = window.nom
             document.getElementsByName("prenom")[0].value = window.prenom
             document.getElementsByName("tel")[0].value = window.tel

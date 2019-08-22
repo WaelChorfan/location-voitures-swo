@@ -3,33 +3,49 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!-- bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<!-- bootstrap   -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- bootstrap   -->
     <title>Document</title>
-
+    <style type="text/css">
+        img {
+            width: 100%;
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
-        <% include includes/navbar %>
-    <h1><%=msg%></h1>
+
+    <% include includes/navbar %>
+   
 
     <div class="container ">
-        <div class="row offset-1">
+            <h1><%=msg%></h1>
+            <hr>
+        <div class="row ">
 
-            <div class="col-md-4 col-offset-2 m-1">
+            <div class="col-md-4  mt-1">
+                <h2>Ajouter Voiture</h2>
+                <hr>
                 <!-- block1 -->
-                <form action="/voitures/" method="post">
+                <form action="/voitures/" method="post" enctype="multipart/form-data">
+
+                    <input type="text" name="id" hidden> <br> <br>
                     <input type="text" placeholder="matricule" name="matricule"> <br> <br>
                     <input type="text" placeholder="marque" name="marque"> <br> <br>
-                    <input type="text" placeholder="couleur" name="couleur"> <br> <br> 
-                     <input type="text" placeholder="prixJour" name="prixJour"> <br> <br>
-                
+                    <input type="text" placeholder="couleur" name="couleur"> <br> <br>
+                    <input type="text" placeholder="prix" name="prix"> <br> <br>
+
+                    <label for="image"> Selectionner une image</label>
+                    <input type="file" name="image" id="image"> <br> <br>
+
                     <br>
                     <input type="submit" value="Enregistrer">
                     <input type="reset" value="Annuler">
@@ -37,24 +53,25 @@
                 </form>
             </div>
 
-            <div class="col-md-4 col-offset-2 m-1 ">
+            <div class="col-md-6  mt-1 ">
                 <!-- block2 -->
                 <form action="/voitures/search" method="post">
-                    <input type="text" placeholder="search here"  name="searchText">
-                    <input type="submit" value="Search .."  >
+                    <input type="text" placeholder="search here" name="searchText">
+                    <input type="submit" value="Search ..">
                 </form>
-                
-                <table class="table table-striped">
+                <hr>
+                <table class="table table-bordered">
                     <tr>
                         <th>matricule</th>
                         <th>marque</th>
                         <th>couleur</th>
                         <th>Prix par jour</th>
-                      
-                        <th>delete</th>            
+                        <th>Image</th>
+
+                        <th>delete</th>
                         <th>edit</th>
                     </tr>
-                    <% for(var i=0; i   < long ; i++)  {%>
+                    <% for(var i=0; i < long ; i++)  {%>
                     <tr>
                         <td>
                             <%= JSON.stringify(voiture[i].matricule).replace(/"/g,'') %>
@@ -66,7 +83,14 @@
                             <%= JSON.stringify(voiture[i].couleur).replace(/"/g,'')%>
                         </td>
                         <td>
-                            <%= JSON.stringify(voiture[i].prixJour).replace(/"/g,'')%>
+                            <%= JSON.stringify(voiture[i].prix).replace(/"/g,'')%>
+                        </td>
+                        <td>
+
+                            <!-- <div class="zoom"></div> -->
+                            <img ondblclick="showImage(this);"
+                                src="http://localhost:3000/images/<%= JSON.stringify(voiture[i].image).replace(/"/g,'')  %>">
+
                         </td>
                         <td>
                             <form action="/voitures/delete" method="post">
@@ -78,12 +102,11 @@
                         </td>
                         <td>
                             <button onclick="
-                                
                                 window.id='<%= voiture[i].id %>' ;
                                 window.matricule='<%= voiture[i].matricule %>' ;
                                 window.marque='<%= voiture[i].marque %>' ;
                                 window.couleur='<%= voiture[i].couleur %>' ;
-                                window.prixJour='<%= voiture[i].prixJour%>' ;
+                                window.prix='<%= voiture[i].prix%>' ;
                           
                                 setEditionMode()">Edit</button>
                         </td>
@@ -99,8 +122,22 @@
             document.getElementsByName("matricule")[0].value = window.matricule
             document.getElementsByName("marque")[0].value = window.marque
             document.getElementsByName("couleur")[0].value = window.couleur
-            document.getElementsByName("prixJour")[0].value = window.prixJour
+            document.getElementsByName("prix")[0].value = window.prix
         }
+
+    </script>
+
+    <script>
+        function showImage(obj) {
+            var imWin = window.open(obj.src);
+
+            setTimeout(() => {
+                imWin.close();
+            }, 3000);
+
+        }
+
     </script>
 </body>
+
 </html>

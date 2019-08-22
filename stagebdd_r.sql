@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 04, 2019 at 12:46 PM
+-- Generation Time: Aug 22, 2019 at 12:41 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -37,15 +37,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   `cin` int(8) NOT NULL,
   `solde` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `client`
---
-
-INSERT INTO `client` (`id`, `nom`, `prenom`, `tel`, `cin`, `solde`) VALUES
-(2, 'Chorfan', 'Wael', '+21652236988', 88888888, 77),
-(3, 'M.Davis', 'Casy', '5143509039', 77777777, 99);
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -67,13 +59,6 @@ CREATE TABLE IF NOT EXISTS `location` (
   KEY `idv` (`idv`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `location`
---
-
-INSERT INTO `location` (`id`, `datedeb`, `datefin`, `caution`, `prixtotal`, `idc`, `idv`) VALUES
-(9, '2019-08-06', '2019-08-07', 8000, 800, 2, 7);
-
 -- --------------------------------------------------------
 
 --
@@ -86,17 +71,11 @@ CREATE TABLE IF NOT EXISTS `voiture` (
   `matricule` varchar(80) NOT NULL,
   `marque` varchar(80) NOT NULL,
   `couleur` varchar(80) NOT NULL,
-  `prixJour` int(10) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `voiture`
---
-
-INSERT INTO `voiture` (`id`, `matricule`, `marque`, `couleur`, `prixJour`) VALUES
-(7, '180TN5000', 'Renault Clio ', 'rouge', 300),
-(8, '160TN4444', 'BMW M3 250D', 'rouge', 50);
+  `prix` int(10) NOT NULL,
+  `image` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_images` (`image`,`matricule`,`couleur`,`prix`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
 --
 -- Constraints for dumped tables
